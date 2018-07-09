@@ -1,0 +1,174 @@
+package com.cg.eis.bean;
+
+public class Employee {
+int id;
+String name;
+int salary;
+int designation;
+String insurationScheme;
+public int getId() {
+	return id;
+}
+public void setId(int id) {
+	this.id = id;
+}
+public String getName() {
+	return name;
+}
+public void setName(String name) {
+	this.name = name;
+}
+public int getSalary() {
+	return salary;
+}
+public void setSalary(int salary) {
+	this.salary = salary;
+}
+public int getDesignation() {
+	return designation;
+}
+public void setDesignation(int designation) {
+	this.designation = designation;
+}
+public String getInsurationScheme() {
+	return insurationScheme;
+}
+public void setInsurationScheme(String insurationScheme) {
+	this.insurationScheme = insurationScheme;
+}
+}
+
+
+/*--------------com.cg.eis.service(EmployeeService Interface)-----------------*/
+
+package com.cg.eis.service;
+
+public interface EmployeeService {
+public void getEmployeeDetails();
+public void getInsuranceScheme();
+public void displayDetails();
+
+}
+
+/*--------------com.cg.eis.service(Service Class)-----------------*/
+
+package com.cg.eis.service;
+import java.util.Scanner;
+
+import com.cg.eis.bean.*;
+
+public class Service implements EmployeeService{
+	Employee e=new Employee();
+
+	@Override    <!------Overriden annotation------->
+	public void getEmployeeDetails() {
+		
+		System.out.println("Please enter your employee id");
+		Scanner s1=new Scanner(System.in);
+		e.setId(s1.nextInt());
+		Scanner s2=new Scanner(System.in);
+		System.out.println("Please enter your name");
+		e.setName(s2.nextLine());
+		Scanner s3=new Scanner(System.in);
+		System.out.println("Enter the salary");
+		e.setSalary(s3.nextInt());
+		Scanner s4=new Scanner(System.in);
+		System.out.println("Select your designation\n"+
+						    "1.Clerk\n2.System Associate\n3.Programmer\n4.Manager");
+		e.setDesignation(s4.nextInt());
+		if(e.getDesignation()!=1 && e.getDesignation()!=2 && e.getDesignation()!=3 && e.getDesignation()!=4 ){
+
+			System.out.println("Please select a valid designation");
+			System.exit(0);
+		}
+		s1.close();
+		s2.close();
+		s3.close();
+		s4.close();
+	}
+
+	@Override     <!------Overriden annotation------->
+	public void getInsuranceScheme() {
+			if(e.getSalary()<5000 && e.getDesignation()==1){
+				e.setInsurationScheme("No Scheme");
+			}
+			else if(e.getSalary()>=5000 && e.getSalary()<20000 && e.getDesignation()==2)
+			{
+				e.setInsurationScheme("Scheme C");
+			}
+			else if(e.getSalary()>=20000 && e.getSalary()<40000 && e.getDesignation()==3)
+			{
+				e.setInsurationScheme("Scheme B");
+			}
+			else if(e.getSalary()>=40000 && e.getDesignation()==4)
+			{
+				e.setInsurationScheme("Scheme A");
+			}
+
+	}
+
+	@Override   <!------Overriden annotation------->
+	public void displayDetails() {
+		String desgn=null;
+		if(e.getDesignation()==1)
+			desgn="Clerk";
+		else if(e.getDesignation()==2)
+			desgn="System Associate";
+		else if(e.getDesignation()==3)
+			desgn="Programmer";
+		else if(e.getDesignation()==4)
+			desgn="Manager";
+		
+		System.out.println("\nEmployee Id : "+e.getId()+
+						   "\nEmployee Name : "+e.getName()+
+						   "\nSalary : "+e.getSalary()+
+						   "\nDesignation : "+desgn+
+						   "\nInsuration Scheme : "+e.getInsurationScheme());
+		
+	}
+
+}
+
+/*--------------com.cg.eis.pl(EmployeeDetails Class)-----------------*/
+
+
+package com.cg.eis.pl;
+import java.util.Scanner;
+
+import com.cg.eis.bean.*;
+import com.cg.eis.service.Service;
+
+public class EmployeeDetails {
+	public static void main(String[] args) {
+
+		Service s=new Service();
+		s.getEmployeeDetails();
+		s.getInsuranceScheme();
+		s.displayDetails();
+		
+	
+		
+	}
+
+}
+
+Output:
+
+Please enter your employee id
+150704
+Please enter your name
+Dadi Jahanavi
+Enter the salary
+15600
+Select your designation
+1.Clerk
+2.System Associate
+3.Programmer
+4.Manager
+3
+
+Employee Id : 150704
+Employee Name : Dadi Jahanavi
+Salary : 15600
+Designation : Programmer
+Insuration Scheme : null

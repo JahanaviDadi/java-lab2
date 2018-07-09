@@ -1,0 +1,168 @@
+import java.util.Random;
+
+
+public class Account {
+
+	long accNum;
+	double balance;
+	public long getAccNum() {
+		Random random=new Random();
+		accNum=Math.abs(random.nextLong());
+		return accNum;
+	}
+	public double getBalance() {
+		return balance;
+	}
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+	public void deposit(double deposit){
+		this.balance=balance+deposit;
+	}
+	 public void withdraw(double withdraw){
+		 
+	 }
+
+
+}
+
+----
+
+public class Savings_Account extends Account {
+final long minimum_balance=500;
+public static void main(String[] args) {
+	Person_Account accHolder1=new Person_Account();
+	Person_Account accHolder2=new Person_Account();
+	Savings_Account s1=new Savings_Account();
+	Savings_Account s2=new Savings_Account();
+	accHolder1.setName("smith");
+	accHolder1.setAge(20);
+	s1.getAccNum();
+	s1.setBalance(2000);
+	s1.deposit(2000);
+	
+	System.out.println(s1);
+	accHolder2.setName("Kathy");
+	accHolder2.setAge(20);
+	s2.getAccNum();
+	s2.setBalance(3000);
+	s2.withdraw(2000);
+	System.out.println(s2);
+	
+}
+@Override
+public void withdraw(double withdraw) {
+	
+	if(balance-withdraw>=minimum_balance)
+	{
+		balance=Math.abs(balance-withdraw);
+	}
+	else{
+		System.out.println("Insufficient amount");
+	}
+}
+public String toString()
+{
+	return "Account No: "+this.accNum+"\nTotal balance is "+this.balance+"\n";
+}
+
+}
+
+-----
+
+public class Current_Account extends Account{
+	 double overdraft_limit=30000;
+	 public static void main(String[] args) {
+			Person_Account accHolder1=new Person_Account();
+			Person_Account accHolder2=new Person_Account();
+			Current_Account c1=new Current_Account();
+			Current_Account c2=new Current_Account();
+			accHolder1.setName("smith");
+			accHolder1.setAge(20);
+			c1.getAccNum();
+			c1.setBalance(2000);
+			c1.deposit(2000);
+			
+			System.out.println(c1);
+			accHolder2.setName("Kathy");
+			accHolder2.setAge(20);
+			c2.getAccNum();
+			c2.setBalance(3000);
+			c2.withdraw(2000);
+			System.out.println(c2);
+			
+		}
+	@Override
+	public void withdraw(double withdraw) {
+		// TODO Auto-generated method stub
+		//super.withdraw(withdraw);
+		if(overdraft(withdraw)==false)
+		{
+			overdraft_limit=overdraft_limit-withdraw;
+		}
+		else{
+			
+			System.out.println("Over Draft Limit Reached");
+			System.exit(0);
+		}
+	}
+	public boolean overdraft(double withdraw)
+	{
+		if(withdraw<=overdraft_limit)
+		{
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	public String toString()
+	{
+		return "Account No: "+this.accNum+"\nLimit after withdrawal is  "+overdraft_limit+"\n";
+	}
+	}
+-----
+
+public class Person_Account{
+String name;
+float age;
+
+public String getName() {
+	return name;
+}
+public void setName(String name) {
+	this.name = name;
+}
+public float getAge() {
+	return age;
+}
+public void setAge(float age) {
+	try{
+		if(age>15)
+		this.age = age;
+		else{
+			throw new AgeException("Age should be greater than 15");
+		}
+	}
+	catch(AgeException a){
+		a.printStackTrace();
+	}
+	
+    }
+}
+
+Output:
+
+Savings Account-
+
+Account No: 6999608874573570885
+Total balance is 1000.0
+
+
+Current Account-
+
+Account No: 7993995726713033293
+Limit after withdrawal is  28000.0
+
+
+
